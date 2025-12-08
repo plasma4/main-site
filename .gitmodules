@@ -1,0 +1,3 @@
+[submodule "projects"]
+	path = projects
+	url = https://github.com/plasma4/my-site.git
