@@ -1,0 +1,106 @@
+* {
+  font-family: "Ubuntu Mono";
+  color: white;
+  line-height: 110%;
+}
+
+body {
+  background-color: #111;
+  text-align: center;
+  font-size: 24px;
+}
+
+h1 {
+  font-size: 20px;
+}
+
+.main {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  margin: 0 auto;
+  display: flex;
+  width: 400px;
+  height: 120px;
+  padding: 0;
+  box-shadow: inset -8px -8px 40px #fffb;
+}
+
+.container {
+  transition: opacity 300ms ease-out;
+  display: inline-block;
+  font-size: 18px;
+  padding: 10px;
+  margin-bottom: 3px;
+  border-radius: 10px;
+  width: 60%;
+  max-width: 500px;
+  border: solid 1px;
+  opacity: 0.8;
+}
+
+.container:hover {
+  opacity: 1;
+}
+
+.main-text {
+  font-size: 18px;
+  padding: 0 4px 6px 4px;
+}
+
+p {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 4px;
+}
+
+canvas,
+.cover {
+  position: absolute;
+  display: block;
+  z-index: -2;
+  top: 0;
+  left: 120px;
+  height: 120px;
+}
+
+hr {
+  border: solid 1px white;
+}
+
+.link {
+  transition: filter 1s, color 100ms;
+  font-size: 20px;
+  text-shadow: 0 0 2px black, 0 0 2px black, 0 0 1px black, 0 0 1px black,
+    0 0 1px black;
+  color: #78b2fd;
+}
+
+.link:hover {
+  color: #488de8;
+  filter: brightness(0.7);
+}
+
+.link:active {
+  color: #2d6ec3;
+  filter: brightness(0.5);
+}
+
+.link:visited {
+  color: #b662ef;
+}
+
+.link:hover:visited {
+  color: #893cbc;
+  filter: brightness(0.7);
+}
+
+.link:active:visited {
+  color: #7327a5;
+  filter: brightness(0.5);
+}
+
+small {
+  display: block;
+  font-size: 12px;
+}
