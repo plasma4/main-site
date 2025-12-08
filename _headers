@@ -1,3 +1,7 @@
-/projects/FractalSky/*
+/projects/FractalSky/
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Embedder-Policy: require-corp
+/projects/FractalSky/worker.js
+  Cross-Origin-Resource-Policy: same-origin
+/projects/FractalSky/serviceWorker.js
+  Cross-Origin-Resource-Policy: same-origin
