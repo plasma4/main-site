@@ -1,7 +1,7 @@
-/projects/FractalSky/*
+/projects/FractalSky/**
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Embedder-Policy: require-corp
-/projects/FractalSky/*.js
+/projects/FractalSky/**/*.js
   Cross-Origin-Resource-Policy: cross-origin
-/projects/FractalSky/*.wasm
+/projects/FractalSky/**/*.wasm
   Cross-Origin-Resource-Policy: cross-origin
