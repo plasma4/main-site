@@ -1,8 +1,9 @@
 const backgroundDisabled = false;
 const canvas = document.getElementsByTagName("canvas")[0];
+const main = document.getElementsByTagName("div")[0];
 const RED = ["#0009", [1, 0.2, 0], [0.9, 0.1, 0.1], [0.6, 0.1, 0]];
 const BLUE = ["#0c2c49bb", [0, 1, 1], [0, 1, 1], [0, 0, 1]];
-const PURPLE = ["rgba(64, 15, 68, 0.73)", [1.8, 0, 2], [0, 0, 1], [1, 0, 1]];
+const PURPLE = ["#400f44bb", [1.8, 0, 2], [0, 0, 1], [1, 0, 1]];
 var coverID = Math.floor(Math.random() * 3);
 
 var backgroundColor1 = [0, 0, 0];
@@ -12,9 +13,10 @@ var timestampShift = 0;
 var speed = 25;
 
 function selectBackground() {
-  var color = [RED, BLUE, PURPLE][(coverID = coverID === 2 ? 0 : coverID + 1)];
+  var color = [RED, BLUE, PURPLE][coverID];
   timestampShift = Math.floor(Math.random() * 100000000);
   // cover.style.backgroundColor = color[0]
+  main.classList.add("main" + coverID);
   updateBackgroundColors(color[1], color[2], color[3]);
 }
 

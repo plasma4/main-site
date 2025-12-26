@@ -16,6 +16,7 @@ h1 {
 }
 
 .main {
+  transition: box-shadow 1s;
   font-family: "Ubuntu Mono";
   position: relative;
   overflow: hidden;
@@ -26,6 +27,22 @@ h1 {
   height: 120px;
   padding: 0;
   box-shadow: inset -8px -8px 40px #fffb;
+}
+
+.main:hover {
+  box-shadow: inset -8px -8px 40px #a5e5d5bb;
+}
+
+.main0:hover {
+  box-shadow: inset -8px -8px 40px #edc856bb;
+}
+
+.main1:hover {
+  box-shadow: inset -8px -8px 40px #49aee5bb;
+}
+
+.main2:hover {
+  box-shadow: inset -8px -8px 40px #df7bf0bb;
 }
 
 .container {
@@ -68,13 +85,12 @@ canvas,
 
 hr {
   border: solid 1px white;
+  filter: drop-shadow(0 0 2px white);
 }
 
 .link {
   transition: filter 1s, color 100ms;
   font-size: 20px;
-  text-shadow: 0 0 2px black, 0 0 2px black, 0 0 1px black, 0 0 1px black,
-    0 0 1px black;
   color: #78b2fd;
 }
 
