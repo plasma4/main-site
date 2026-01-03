@@ -1,3 +1,4 @@
+"use strict"
 const backgroundDisabled = false;
 const canvas = document.getElementsByTagName("canvas")[0];
 const main = document.getElementsByTagName("div")[0];
