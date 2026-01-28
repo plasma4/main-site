@@ -1,5 +1,9 @@
 "use strict";
-const blogTitles = ["go to home", "first blog entry"];
+const blogTitles = [
+  "go to home",
+  "first blog entry",
+  "The insane complexity of JS yielding (requestIdleCallback? scheduler.yield? what??)",
+];
 const backgroundDisabled = false;
 
 const canvas = document.getElementsByTagName("canvas")[0];
@@ -13,7 +17,7 @@ var backgroundColor1 = [0, 0, 0];
 var backgroundColor2 = [0, 0, 0];
 var backgroundColor3 = [0, 0, 0];
 var timestampShift = 0;
-var speed = 25;
+var speed = 1;
 
 function selectBackground() {
   var color = [RED, BLUE, PURPLE][(coverID = coverID === 2 ? 0 : coverID + 1)];
@@ -30,7 +34,13 @@ document.addEventListener("DOMContentLoaded", function () {
   button = document.getElementById("toHome");
   if (button !== null) {
     button.addEventListener("click", function () {
-      location.replace("/");
+      location.replace("../index.html");
+    });
+  }
+  button = document.getElementById("toBlog");
+  if (button !== null) {
+    button.addEventListener("click", function () {
+      location.replace("index.html");
     });
   }
 });
@@ -75,9 +85,9 @@ const fragmentShaderSource = `
             float siz = pow( sin(float(i)*651.74+5.0)*0.5 + 0.5, 4.0 );
             float pox =      sin(float(i)*321.55+4.1) * resolution.x / resolution.y;
             float rad = 0.1+0.5*siz+sin(pha+siz)/4.0;
-            vec2  pos = vec2( pox+sin(time/15.+pha+siz), -1.0-rad + (2.0+2.0*rad)*mod(pha+0.3*(time/7.)*(0.2+0.8*siz),1.0));
+            vec2  pos = vec2( pox+sin(time/25.+pha+siz), -1.0-rad + (2.0+2.0*rad)*mod(pha+0.3*(time/7.)*(0.2+0.8*siz),1.0));
             float dis = length( uv - pos );
-            vec3  col = mix( vec3(0.194*sin(time/6.0)+0.3,0.2,0.3*pha), vec3(1.1*sin(time/9.0)+0.3,0.2*pha,0.4), 0.5+0.5*sin(float(i)));
+            vec3  col = mix( vec3(0.194*sin(time/18.0)+0.3,0.2,0.3*pha), vec3(1.1*sin(time/24.0)+0.3,0.2*pha,0.4), 0.5+0.5*sin(float(i)));
             float f = length(uv-pos)/rad;
             f = sqrt(clamp(1.0+(sin((time)*siz)*0.5)*f,0.0,1.0));
             color += col.zyx *(1.0-smoothstep( rad*0.15, rad, dis ));
@@ -94,7 +104,7 @@ function createShader(gl, type, source) {
   gl.compileShader(shader);
   if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
     console.error(
-      "An error occurred compiling the shaders: " + gl.getShaderInfoLog(shader)
+      "An error occurred compiling the shaders: " + gl.getShaderInfoLog(shader),
     );
     console.error("Shader source:", source);
     gl.deleteShader(shader);
@@ -133,7 +143,7 @@ function initShaderProgram() {
   var shaderProgram = createShaderProgram(
     gl,
     vertexShaderSource,
-    fragmentShaderSource
+    fragmentShaderSource,
   );
 
   if (!shaderProgram) return;
@@ -145,7 +155,7 @@ function initShaderProgram() {
 
   resolutionUniformLocation = gl.getUniformLocation(
     shaderProgram,
-    "resolution"
+    "resolution",
   );
   timeUniformLocation = gl.getUniformLocation(shaderProgram, "time");
   //backgroundColor1UniformLocation = gl.getUniformLocation(shaderProgram, "u_color1")
@@ -156,9 +166,15 @@ function initShaderProgram() {
 // Initialize shaders and buffer
 initShaderProgram();
 
+var lastTime = 0;
+var initialSign = Math.random() < 0.5 ? 1 : -1;
+var time = timestampShift;
 function render(timestamp) {
-  timestamp *= speed = Math.max(1, (speed *= 0.975));
-  timestamp += timestampShift;
+  var delta = timestamp - lastTime;
+  speed = Math.max(0.01, speed * 0.98);
+  time += Math.max(delta, 1000) * Math.sqrt(speed);
+  lastTime = timestamp;
+  timestamp = time * initialSign;
   if (backgroundDisabled) {
     requestAnimationFrame(render);
     return;
@@ -246,7 +262,7 @@ function markdown(src) {
   var rx_thead = /^.*\n( *\|( *\:?-+\:?-+\:? *\|)* *\n|)/;
   var rx_row = /.*\n/g;
   var rx_cell = /\||(.*?[^\\])\|/g;
-  var rx_heading = /(?=^|>|\n)([>\s]*?)(#{1,6}) (.*?)( #*)? *(?=\n|$)/g;
+  var rx_heading = /(?=^|>|\n)([>\s]*?)(-?#{1,6}|> ) (.*?)( #*)? *(?=\n|$)/g; // modified to support smol
   var rx_para = /(?=^|>|\n)\s*\n+([^<]+?)\n+\s*(?=\n|<|$)/g;
   var rx_stash = /-\d+\uf8ff/g;
 
@@ -262,7 +278,7 @@ function markdown(src) {
     return src.replace(rx_blockquote, function (all, content) {
       return element(
         "blockquote",
-        blockquote(highlight(content.replace(/^ *&gt */gm, "")))
+        blockquote(highlight(content.replace(/^ *&gt */gm, ""))),
       );
     });
   }
@@ -274,11 +290,11 @@ function markdown(src) {
         highlight(
           content
             .split(
-              RegExp("\n ?" + ind + "(?:(?:\\d+|[a-zA-Z])[.)]|[*\\-+]) +", "g")
+              RegExp("\n ?" + ind + "(?:(?:\\d+|[a-zA-Z])[.)]|[*\\-+]) +", "g"),
             )
             .map(list)
-            .join("</li><li>")
-        )
+            .join("</li><li>"),
+        ),
       );
 
       return (
@@ -311,20 +327,20 @@ function markdown(src) {
                 ? "strong"
                 : "em"
               : sub
-              ? p2
-                ? "s"
-                : "sub"
-              : sup
-              ? "sup"
-              : small
-              ? "small"
-              : big
-              ? "big"
-              : "code",
-            highlight(content)
+                ? p2
+                  ? "s"
+                  : "sub"
+                : sup
+                  ? "sup"
+                  : small
+                    ? "small"
+                    : big
+                      ? "big"
+                      : "code",
+            highlight(content),
           )
         );
-      }
+      },
     );
   }
 
@@ -340,6 +356,21 @@ function markdown(src) {
   replace(rx_lt, "&lt");
   replace(rx_gt, "&gt");
   replace(rx_space, "  ");
+
+  // code (customized with Prism)
+  replace(rx_code, function (all, p1, p2, p3, p4) {
+    // Something like ```js becomes language-js
+    var lang = p1.match(/^(?:```|~~~)(.*)\n/);
+    var langClass =
+      lang && lang[1] ? ' class="language-' + lang[1].trim() + '"' : "";
+
+    stash[--si] = element(
+      "pre",
+      "<code" + langClass + ">" + (p3 || p4.replace(/^    /gm, "")) + "</code>",
+    );
+    return si + "\uf8ff";
+  });
+  replace("||", "\n\n\n");
 
   // custom blogdata implementation
   replace(rx_blogdata, function (all, id, name) {
@@ -367,21 +398,16 @@ function markdown(src) {
   src = list(src);
   replace(rx_listjoin, "");
 
-  // code
-  replace(rx_code, function (all, p1, p2, p3, p4) {
-    stash[--si] = element(
-      "pre",
-      element("code", p3 || p4.replace(/^    /gm, ""))
-    );
-    return si + "\uf8ff";
-  });
-
   // link or image
   replace(rx_link, function (all, p1, p2, p3, p4, p5, p6) {
     stash[--si] = p4
       ? p2
         ? '<img src="' + p4 + '" alt="' + p3 + '"/>'
-        : '<a href="' + p4 + '">' + unesc(highlight(p3)) + "</a>"
+        : '<a href="' +
+          p4 +
+          '" target="_blank">' +
+          unesc(highlight(p3)) +
+          "</a>"
       : p6;
     return si + "\uf8ff";
   });
@@ -402,19 +428,25 @@ function markdown(src) {
                   return ci
                     ? element(
                         sep && !ri ? "th" : "td",
-                        unesc(highlight(cell || ""))
+                        unesc(highlight(cell || "")),
                       )
                     : "";
-                })
+                }),
               );
-        })
+        }),
       )
     );
   });
 
   // heading
   replace(rx_heading, function (all, _, p1, p2) {
-    return _ + element("h" + p1.length, unesc(highlight(p2)));
+    return (
+      _ +
+      element(
+        p1 === "-#" ? "small" : p1 === "> " ? "blockquote" : "h" + p1.length,
+        unesc(highlight(p2)),
+      )
+    );
   });
 
   // paragraph
@@ -431,8 +463,8 @@ function markdown(src) {
 }
 
 var html = markdown(blogText);
-console.log("Generated HTML:\n" + html);
 document.getElementById("content").innerHTML = html;
+Prism.highlightAllUnder(document.getElementById("content"));
 
 function checkAge() {
   ageElement.textContent =

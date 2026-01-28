@@ -1,10 +1,11 @@
 * {
-  font-family: "Playfair Display";
-  color: white;
   line-height: 110%;
 }
 
-html {
+html,
+button {
+  font-family: "Playfair Display";
+  color: white;
   font-size: 18px;
 }
 
@@ -14,6 +15,12 @@ canvas {
   left: 0;
   width: calc(100% + 2px);
   height: calc(100% + 2px);
+}
+
+#content {
+  max-width: 800px;
+  text-align: left;
+  margin: 0 auto;
 }
 
 div {
@@ -27,10 +34,6 @@ div {
 
 p {
   position: relative;
-  text-align: center;
-}
-
-#content {
 }
 
 hr {
@@ -40,8 +43,20 @@ hr {
 
 h1,
 tt,
+pre,
 code {
   font-family: "Ubuntu Mono";
+}
+
+pre[class*="language-"] {
+  color: black;
+  border-radius: 8px;
+  border: solid 2px black;
+  font-size: 14px;
+}
+
+code {
+  color: #f8c953;
 }
 
 h1 {
@@ -70,8 +85,14 @@ button {
 
 a {
   font-family: Poppins;
-  transition: filter 1s, color 100ms;
-  text-shadow: 0 0 2px black, 0 0 2px black, 0 0 1px black, 0 0 1px black,
+  transition:
+    filter 1s,
+    color 100ms;
+  text-shadow:
+    0 0 2px black,
+    0 0 2px black,
+    0 0 1px black,
+    0 0 1px black,
     0 0 1px black;
   color: #78b2fd;
 }

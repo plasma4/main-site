@@ -99,33 +99,41 @@ hr {
 }
 
 .link {
-  transition: filter 600ms, color 150ms;
+  transition:
+    filter 600ms,
+    color 150ms,
+    text-shadow 500ms;
   color: #78b2fd;
   text-decoration: underline;
 }
 
 .link:hover {
   color: #488de8;
-  filter: brightness(0.8);
+  filter: brightness(0.85);
 }
 
 .link:active {
   color: #2d6ec3;
-  filter: brightness(0.6);
+  filter: brightness(1.2);
+  text-shadow: 2px 2px 0 #19075c;
 }
 
 .link:visited {
-  color: #b662ef;
+  color: #c762ef;
 }
 
 .link:hover:visited {
-  color: #893cbc;
-  filter: brightness(0.8);
+  color: #8d3cbc;
 }
 
 .link:active:visited {
   color: #7327a5;
-  filter: brightness(0.6);
+  text-shadow: 2px 2px 0 #430b69;
+}
+
+.link2 {
+  font-weight: 600;
+  filter: brightness(1.1);
 }
 
 small {
