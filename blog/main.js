@@ -2,6 +2,7 @@
 const blogTitles = [
   "go to home",
   "first blog entry",
+  "Time Transcending Clocks, UI design, and influence: a retrospective",
   "The insane complexity of JS yielding (requestIdleCallback? scheduler.yield? what??)",
 ];
 const backgroundDisabled = false;
@@ -22,6 +23,7 @@ var speed = 1;
 function selectBackground() {
   var color = [RED, BLUE, PURPLE][(coverID = coverID === 2 ? 0 : coverID + 1)];
   timestampShift = Math.floor(Math.random() * 100000000);
+  speed += 0.1 / Math.log10(speed + 9);
   cover.style.backgroundColor = color[0];
   updateBackgroundColors(color[1], color[2], color[3]);
 }
@@ -464,7 +466,8 @@ function markdown(src) {
 
 var html = markdown(blogText);
 document.getElementById("content").innerHTML = html;
-Prism.highlightAllUnder(document.getElementById("content"));
+if (typeof Prism !== "undefined")
+  Prism.highlightAllUnder(document.getElementById("content"));
 
 function checkAge() {
   ageElement.textContent =

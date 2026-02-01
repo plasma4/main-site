@@ -17,10 +17,16 @@ canvas {
   height: calc(100% + 2px);
 }
 
-#content {
+#content,
+#age {
   max-width: 800px;
   text-align: left;
   margin: 0 auto;
+}
+
+#age {
+  margin-top: 4px;
+  font-size: 16px;
 }
 
 div {
