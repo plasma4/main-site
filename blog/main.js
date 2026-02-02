@@ -372,7 +372,7 @@ function markdown(src) {
     );
     return si + "\uf8ff";
   });
-  replace("||", "\n\n\n");
+  replace("|||", "\n\n\n");
 
   // custom blogdata implementation
   replace(rx_blogdata, function (all, id, name) {
