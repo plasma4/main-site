@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 const backgroundDisabled = false;
 const canvas = document.getElementsByTagName("canvas")[0];
 const main = document.getElementsByTagName("div")[0];
@@ -87,7 +87,7 @@ function createShader(gl, type, source) {
   gl.compileShader(shader);
   if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
     console.error(
-      "An error occurred compiling the shaders: " + gl.getShaderInfoLog(shader)
+      "An error occurred compiling the shaders: " + gl.getShaderInfoLog(shader),
     );
     console.error("Shader source:", source);
     gl.deleteShader(shader);
@@ -126,7 +126,7 @@ function initShaderProgram() {
   var shaderProgram = createShaderProgram(
     gl,
     vertexShaderSource,
-    fragmentShaderSource
+    fragmentShaderSource,
   );
 
   if (!shaderProgram) return;
@@ -138,7 +138,7 @@ function initShaderProgram() {
 
   resolutionUniformLocation = gl.getUniformLocation(
     shaderProgram,
-    "resolution"
+    "resolution",
   );
   timeUniformLocation = gl.getUniformLocation(shaderProgram, "time");
   //backgroundColor1UniformLocation = gl.getUniformLocation(shaderProgram, "u_color1")
@@ -149,7 +149,11 @@ function initShaderProgram() {
 // Initialize shaders and buffer
 initShaderProgram();
 
+var time = 0;
 function render(timestamp) {
+  var diff = Math.min(timestamp - time, 1000);
+  time += diff;
+  var timestamp = time;
   timestamp *= speed = Math.max(1, (speed *= 0.975));
   timestamp += timestampShift;
   if (backgroundDisabled) {
@@ -157,7 +161,7 @@ function render(timestamp) {
     return;
   }
   gl.uniform2f(resolutionUniformLocation, canvas.width, canvas.height);
-  gl.uniform1f(timeUniformLocation, timestamp / 1000.0);
+  gl.uniform1f(timeUniformLocation, timestamp / 500); // teehee faster than normal
   // gl.uniform3f(backgroundColor1UniformLocation,  backgroundColor1[0], backgroundColor1[1], backgroundColor1[2])
   //gl.uniform3f(backgroundColor2UniformLocation, backgroundColor2[0], backgroundColor2[1], backgroundColor2[2])
   //gl.uniform3f(backgroundColor3UniformLocation, backgroundColor3[0], backgroundColor3[1], backgroundColor3[2])

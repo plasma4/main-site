@@ -469,11 +469,13 @@ document.getElementById("content").innerHTML = html;
 if (typeof Prism !== "undefined")
   Prism.highlightAllUnder(document.getElementById("content"));
 
+var extraPart = [" hi", " That's a lot!", ""][Math.floor(Math.random() * 3)];
 function checkAge() {
   ageElement.textContent =
     "According to your computer, this site is roughly " +
     ((Date.now() - 1765134000000) / 60000).toLocaleString() +
-    " minutes old.";
+    " minutes old." +
+    extraPart;
 }
 
 var ageElement = document.getElementById("age");
