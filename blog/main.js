@@ -1,10 +1,5 @@
 "use strict";
-const blogTitles = [
-  "go to home",
-  "first blog entry",
-  "Time Transcending Clocks, UI design, and influence: a retrospective",
-  "The insane complexity of JS yielding (requestIdleCallback? scheduler.yield? what??)",
-];
+const blogTitles = ["go to home", "first blog entry"];
 const backgroundDisabled = false;
 
 const canvas = document.getElementsByTagName("canvas")[0];
